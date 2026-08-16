@@ -18,6 +18,105 @@ st.set_page_config(
     layout="wide"
 )
 
+
+# =====================================
+# BOLD WHITE FONT
+# =====================================
+
+st.markdown("""
+<style>
+
+/* Main application text */
+.stApp {
+    color: white !important;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+    color: white !important;
+    font-weight: 800 !important;
+}
+
+/* Normal text */
+p {
+    color: white !important;
+    font-weight: 700 !important;
+}
+
+/* Captions */
+.stCaption {
+    color: white !important;
+    font-weight: 700 !important;
+}
+
+/* Labels */
+label {
+    color: white !important;
+    font-weight: 800 !important;
+}
+
+/* Buttons */
+.stButton button {
+    color: white !important;
+    font-weight: 800 !important;
+}
+
+/* Button text */
+.stButton button p {
+    color: white !important;
+    font-weight: 800 !important;
+}
+
+/* Expander */
+[data-testid="stExpander"] summary {
+    color: white !important;
+    font-weight: 800 !important;
+}
+
+/* Expander text */
+[data-testid="stExpander"] p {
+    color: white !important;
+    font-weight: 700 !important;
+}
+
+/* Dataframe */
+[data-testid="stDataFrame"] {
+    color: white !important;
+    font-weight: 700 !important;
+}
+
+/* Input text */
+input,
+textarea {
+    color: white !important;
+    font-weight: 700 !important;
+}
+
+/* Selectbox */
+.stSelectbox div {
+    color: white !important;
+    font-weight: 700 !important;
+}
+
+/* KPI text */
+[data-testid="stMetricValue"] {
+    color: white !important;
+    font-weight: 800 !important;
+}
+
+[data-testid="stMetricLabel"] {
+    color: white !important;
+    font-weight: 800 !important;
+}
+
+</style>
+""", unsafe_allow_html=True)
+
+
+# =====================================
+# LOAD CSS
+# =====================================
+
 load_css()
 
 
@@ -152,11 +251,26 @@ with col1:
 
     fig.update_traces(
         textinfo="percent+label",
-        pull=[0.02, 0.02, 0.08]
+        pull=[0.02, 0.02, 0.08],
+        textfont=dict(
+            color="white",
+            size=15,
+            family="Arial Black"
+        )
     )
 
     fig.update_layout(
-        paper_bgcolor="rgba(0,0,0,0)"
+        paper_bgcolor="rgba(0,0,0,0)",
+        font=dict(
+            color="white",
+            size=14,
+            family="Arial Black"
+        ),
+        title_font=dict(
+            color="white",
+            size=20,
+            family="Arial Black"
+        )
     )
 
     st.plotly_chart(
@@ -191,7 +305,41 @@ with col2:
         plot_bgcolor="rgba(0,0,0,0)",
         paper_bgcolor="rgba(0,0,0,0)",
         xaxis_title="Gender",
-        yaxis_title="Count"
+        yaxis_title="Count",
+        font=dict(
+            color="white",
+            size=14,
+            family="Arial Black"
+        ),
+        title_font=dict(
+            color="white",
+            size=20,
+            family="Arial Black"
+        ),
+        xaxis=dict(
+            title_font=dict(
+                color="white",
+                size=15,
+                family="Arial Black"
+            ),
+            tickfont=dict(
+                color="white",
+                size=13,
+                family="Arial Black"
+            )
+        ),
+        yaxis=dict(
+            title_font=dict(
+                color="white",
+                size=15,
+                family="Arial Black"
+            ),
+            tickfont=dict(
+                color="white",
+                size=13,
+                family="Arial Black"
+            )
+        )
     )
 
     st.plotly_chart(
@@ -242,7 +390,41 @@ fig.update_layout(
     plot_bgcolor="rgba(0,0,0,0)",
     paper_bgcolor="rgba(0,0,0,0)",
     xaxis_title="Features",
-    yaxis_title="Missing Count"
+    yaxis_title="Missing Count",
+    font=dict(
+        color="white",
+        size=14,
+        family="Arial Black"
+    ),
+    title_font=dict(
+        color="white",
+        size=20,
+        family="Arial Black"
+    ),
+    xaxis=dict(
+        title_font=dict(
+            color="white",
+            size=15,
+            family="Arial Black"
+        ),
+        tickfont=dict(
+            color="white",
+            size=13,
+            family="Arial Black"
+        )
+    ),
+    yaxis=dict(
+        title_font=dict(
+            color="white",
+            size=15,
+            family="Arial Black"
+        ),
+        tickfont=dict(
+            color="white",
+            size=13,
+            family="Arial Black"
+        )
+    )
 )
 
 
@@ -261,27 +443,70 @@ st.divider()
 
 st.subheader("🔥 Feature Correlation Heatmap")
 
-
 numeric_df = df.select_dtypes(
     include="number"
 )
 
-
 fig, ax = plt.subplots(
-    figsize=(12, 8)
+    figsize=(12, 7)
 )
-
 
 sns.heatmap(
     numeric_df.corr(),
     cmap="magma",
     linewidths=0.5,
-    annot=False,
+    annot=False,          # Removes numbers inside boxes
+    cbar=True,
     ax=ax
 )
 
+# X-axis labels
+ax.set_xticklabels(
+    ax.get_xticklabels(),
+    color="white",
+    fontweight="bold",
+    fontsize=11,
+    rotation=45,
+    ha="right"
+)
 
-st.pyplot(fig)
+# Y-axis labels
+ax.set_yticklabels(
+    ax.get_yticklabels(),
+    color="white",
+    fontweight="bold",
+    fontsize=11,
+    rotation=0
+)
+
+# Tick marks
+ax.tick_params(
+    axis="both",
+    colors="white",
+    labelsize=11
+)
+
+# Title
+ax.set_title(
+    "Feature Correlation Heatmap",
+    color="white",
+    fontsize=18,
+    fontweight="bold",
+    pad=15
+)
+
+# Transparent background
+fig.patch.set_alpha(0)
+ax.set_facecolor("none")
+
+plt.tight_layout()
+
+st.pyplot(
+    fig,
+    use_container_width=True
+)
+
+plt.close(fig)
 
 
 st.divider()
